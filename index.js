@@ -12,7 +12,7 @@ renderer = new Renderer(
 // Effect classes.
 effects = [
     "Particles",
-    "Test",
+    "Doesn't exist",
 ]
 
 // Select for effects.
@@ -26,5 +26,6 @@ for (const i in effects) {
 
 // On select, use factory to create effect object.
 select.onchange = () => {
-    renderer.newEffect = new Particles(canvas, context)
+    name = select.options[select.selectedIndex].text
+    renderer.newEffect = effectFactory(name, canvas, context)
 }

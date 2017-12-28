@@ -1,4 +1,14 @@
 
+function effectFactory(name, canvas, context) {
+    switch (name) {
+        case "Particles":
+            return new Particles(canvas, context)
+            break;
+        default:
+            break;
+    }
+}
+
 class Particles {
     constructor(canvas, context) {
         this.canvas = canvas
