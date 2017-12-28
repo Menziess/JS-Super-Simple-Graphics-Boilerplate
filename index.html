@@ -10,8 +10,20 @@
 </head>
 
 <body>
-    <canvas id="canvas" width="500" height="200" style="border:1px solid #000000;">
-    </canvas>
+    <div id="root">
+        <div id="menu">
+            <span>Fps:
+                <span id="fpsMeter">0</span>
+            </span>
+            <br>
+            <select id="select">
+
+            </select>
+        </div>
+        <canvas id="canvas"></canvas>
+    </div>
+    <script src="src/effects.js"></script>
+    <script src="src/renderer.js"></script>
     <script src="index.js"></script>
 </body>
 
