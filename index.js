@@ -9,11 +9,9 @@ renderer = new Renderer(
     0.02
 )
 
-// Effect classes.
-effects = [
-    "Particles",
-    "Doesn't exist",
-]
+// Create effect factory.
+effectFactory = new EffectFactory()
+effects = effectFactory.names
 
 // Select for effects.
 select = document.getElementById('select')
@@ -24,8 +22,9 @@ for (const i in effects) {
     select.appendChild(option)
 }
 
-// On select, use factory to create effect object.
+// // On select, use factory to create effect object.
 select.onchange = () => {
     name = select.options[select.selectedIndex].text
-    renderer.newEffect = effectFactory(name, canvas, context)
+    effect = effectFactory.getEffect(name)
+    renderer.newEffect = new effect(canvas, context)
 }

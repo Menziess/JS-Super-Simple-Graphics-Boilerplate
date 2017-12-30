@@ -1,14 +1,4 @@
 
-function effectFactory(name, canvas, context) {
-    switch (name) {
-        case "Particles":
-            return new Particles(canvas, context)
-            break;
-        default:
-            break;
-    }
-}
-
 class Particles {
     constructor(canvas, context) {
         this.canvas = canvas
@@ -66,3 +56,38 @@ class Particle {
         this.life -= delta * 10
     }
 }
+
+class EffectFactory {
+    constructor() {
+        this.effectClasses = [
+            Particles,
+            Particles
+        ]
+    }
+
+    get names() {
+        return this.effectClasses.map(e => e.name)
+    }
+
+    get effects() {
+        return this.effectClasses
+    }
+
+    getEffect(name) {
+        return this.effects.find(e => e.name === name)
+    }
+}
+
+// const effects = {
+//     Particles
+// }
+
+// function effectFactory(name, canvas, context) {
+//     switch (name) {
+//         case "Particles":
+//             return new Particles(canvas, context)
+//             break;
+//         default:
+//             break;
+//     }
+// }
