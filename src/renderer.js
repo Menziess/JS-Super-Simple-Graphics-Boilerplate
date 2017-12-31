@@ -3,6 +3,8 @@ class Renderer {
     constructor(canvas, context, effect, speed) {
         this.canvas = canvas
         this.context = context
+        this.fpsMeter = document.getElementById('fpsMeter')
+        this.zoom = document.getElementById('zoom')
         this.effect = effect
         this.lastRender = 0
         this.friction = 1 / speed
@@ -25,7 +27,7 @@ class Renderer {
      * @param {float} delta
      */
     draw(delta) {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        this.clearCanvas()
         this.effect.step(this.effect, delta / this.friction)
     }
 
@@ -34,6 +36,11 @@ class Renderer {
      */
     clearCanvas() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        const zoomVal = parseInt(this.zoom.value) / 100
+        this.context.scale(zoomVal + 1, zoomVal + 1)
+        this.context.translate(
+            -this.canvas.width * zoomVal / 2,
+            -this.canvas.height * zoomVal / 2)
     }
 
     /**
@@ -55,7 +62,7 @@ class Renderer {
 
         // Display fps and position
         if (now - this.lastFps > 999) {
-            document.getElementById('fpsMeter').innerText = this.frames
+            this.fpsMeter.innerText = this.frames
             this.lastFps = now;
             this.frames = 0;
         }
@@ -69,8 +76,26 @@ class Renderer {
             this.aspectRatio.bind(this),
             false)
         window.addEventListener("keyup", (e) => {
-            if (e.keyCode == 32) {
-                this.pause()
+            switch (e.keyCode) {
+                case 32:
+                    this.pause()
+                    break;
+                case 37:
+                    this.zoom.stepDown()
+                    break;
+                case 39:
+                    this.zoom.stepUp()
+                    break;
+                case 40:
+                    this.zoom.value = 0
+                    break;
+                case 82:
+                    this.zoom.value = 0
+                    this.context.setTransform(1, 0, 0, 1, 0, 0)
+                    break;
+
+                default:
+                    break;
             }
         })
         this.aspectRatio()

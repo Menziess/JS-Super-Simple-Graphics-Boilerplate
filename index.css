@@ -25,3 +25,11 @@ canvas {
     padding: 0.2em 0.4em 0.2em 0.4em;
     color: white;
 }
+
+#zoom {
+    position: absolute;
+    bottom: 1em;
+    left: 0;
+    width: 98%;
+    margin: 0 1em;
+}

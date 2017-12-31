@@ -2,6 +2,7 @@
 const canvas = document.getElementById('canvas')
 const context = this.canvas.getContext('2d')
 
+
 // Renderer renders effects.
 renderer = new Renderer(
     canvas, context,
@@ -22,7 +23,7 @@ for (const i in effects) {
     select.appendChild(option)
 }
 
-// // On select, use factory to create effect object.
+// On select, use factory to create effect object.
 select.onchange = () => {
     name = select.options[select.selectedIndex].text
     effect = effectFactory.getEffect(name)

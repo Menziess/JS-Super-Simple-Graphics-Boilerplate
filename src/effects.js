@@ -1,4 +1,16 @@
 
+class Grid {
+    constructor(canvas, context) {
+        this.canvas = canvas
+        this.context = context
+    }
+
+    step(self, delta) {
+        self.context.fillStyle("black")
+        self.context.fillRect(0, 0, 10, 10)
+    }
+}
+
 class Particles {
     constructor(canvas, context) {
         this.canvas = canvas
@@ -10,7 +22,7 @@ class Particles {
     spawn(n) {
         const x = this.canvas.width / 2
         const y = this.canvas.height / 2
-        const life = 200
+        const life = 255
 
         for (let i = 0; i < n; i++) {
             new Particle(this.particleIndex++, this.particles, x, y, life)
@@ -19,7 +31,7 @@ class Particles {
 
     step(self, delta) {
 
-        self.spawn(10)
+        self.spawn(5)
 
         for (const particle in self.particles) {
             if (self.particles.hasOwnProperty(particle)) {
@@ -32,28 +44,34 @@ class Particles {
 }
 
 class Particle {
-    constructor(id, particles, x, y, life) {
+    constructor(id, container, x, y, life) {
+
         this.id = id
-        particles[this.id] = this
+        container[this.id] = this
         this.x = x
         this.y = y
-        this.life = Math.random() * 255
 
+        this.life = Math.random() * life
         this.vx = Math.random() * 10
-        this.vy = -10
-        this.gravity = 0.5
+        this.vy = Math.random() * -10
+        this.gravity = 0.8
     }
 
     draw(context, delta) {
-        this.x += delta * this.vx
+        this.x += delta * (this.vx - 5)
         this.y += delta * this.vy
-        this.vy += this.gravity
+
+        // Bounce
+        if (this.vy > 20)
+            this.vy = -this.vy
+
+        else this.vy += this.gravity
 
         context.fillStyle =
-            "hsla(" + parseInt(Math.random() * 360, 10) +
+            "hsla(" + this.life +
             ",100%, 50%, " + this.life / 255 + ")"
         context.fillRect(this.x, this.y, 10, 10)
-        this.life -= delta * 10
+        this.life -= delta * 2
     }
 }
 
@@ -61,7 +79,7 @@ class EffectFactory {
     constructor() {
         this.effectClasses = [
             Particles,
-            Particles
+            Grid,
         ]
     }
 
@@ -77,17 +95,3 @@ class EffectFactory {
         return this.effects.find(e => e.name === name)
     }
 }
-
-// const effects = {
-//     Particles
-// }
-
-// function effectFactory(name, canvas, context) {
-//     switch (name) {
-//         case "Particles":
-//             return new Particles(canvas, context)
-//             break;
-//         default:
-//             break;
-//     }
-// }
