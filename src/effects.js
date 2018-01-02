@@ -1,4 +1,3 @@
-
 class Grid {
     constructor(canvas, context) {
         this.canvas = canvas
@@ -6,8 +5,10 @@ class Grid {
     }
 
     step(self, delta) {
-        self.context.fillStyle("black")
-        self.context.fillRect(0, 0, 10, 10)
+
+        console.log("step")
+
+        self.context.fillRect(800, 250, 10, 10)
     }
 }
 

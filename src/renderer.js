@@ -92,6 +92,7 @@ class Renderer {
                 case 82:
                     this.zoom.value = 0
                     this.context.setTransform(1, 0, 0, 1, 0, 0)
+                    this.draw(1e-30)
                     break;
 
                 default:
